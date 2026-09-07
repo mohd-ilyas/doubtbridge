@@ -19,12 +19,73 @@ const catalog: DepartmentSeed[] = [
     faculty: { name: 'Dr. Sathish', email: 'sathish@doubtbridge.com' },
     student: { name: 'CSE Student', email: 'cse.student@doubtbridge.com' },
     subjects: [
-      { name: 'Data Structures and Algorithms', topics: ['Arrays and Linked Lists', 'Trees and Graphs', 'Dynamic Programming'] },
-      { name: 'Advanced Data Structures and Algorithms', topics: ['Segment Trees', 'Greedy Algorithms', 'Graph Algorithms'] },
-      { name: 'Object-Oriented Programming', topics: ['Classes and Objects', 'Inheritance', 'Polymorphism'] },
-      { name: 'Database Management Systems', topics: ['Normalization', 'SQL Queries', 'Transactions'] },
-      { name: 'Operating Systems', topics: ['Processes and Threads', 'Scheduling', 'Memory Management'] },
-      { name: 'Computer Networks', topics: ['OSI Model', 'TCP/IP', 'Routing'] },
+      {
+        name: 'Data Structures and Algorithms',
+        topics: [
+          'Arrays and Linked Lists',
+          'Trees and Graphs',
+          'Dynamic Programming',
+          'Stacks and Queues',
+          'Hash Tables and Searching',
+          'Sorting Algorithms'
+        ]
+      },
+      {
+        name: 'Advanced Data Structures and Algorithms',
+        topics: [
+          'Segment Trees',
+          'Greedy Algorithms',
+          'Graph Algorithms',
+          'Disjoint Set Union (DSU)',
+          'Tries and String Matching',
+          'Network Flow and Max Flow'
+        ]
+      },
+      {
+        name: 'Object-Oriented Programming',
+        topics: [
+          'Classes and Objects',
+          'Inheritance and Interfaces',
+          'Polymorphism and Overloading',
+          'Abstraction and Encapsulation',
+          'Exception Handling',
+          'Design Patterns'
+        ]
+      },
+      {
+        name: 'Database Management Systems',
+        topics: [
+          'Normalization and Database Design',
+          'SQL Queries and Joins',
+          'Transactions and Concurrency Control',
+          'Indexing and B-Trees',
+          'Entity-Relationship (ER) Modeling',
+          'NoSQL and Distributed Databases'
+        ]
+      },
+      {
+        name: 'Operating Systems',
+        topics: [
+          'Processes and Threads',
+          'CPU Scheduling Algorithms',
+          'Memory Management and Virtual Memory',
+          'Deadlocks and Synchronization',
+          'File System Interface and Implementation',
+          'Virtualization and Containers'
+        ]
+      },
+      {
+        name: 'Computer Networks',
+        topics: [
+          'OSI Model and Layer Architecture',
+          'TCP/IP Protocol Suite',
+          'Routing Algorithms (OSPF, BGP)',
+          'IP Addressing, Subnetting, and CIDR',
+          'DNS, DHCP, and HTTP/HTTPS Protocols',
+          'Network Security, Firewalls, and Cryptography',
+          'Wireless, Mobile, and Socket Programming'
+        ]
+      },
     ],
   },
   {
@@ -32,11 +93,56 @@ const catalog: DepartmentSeed[] = [
     faculty: { name: 'Dr. Sarath Kumar', email: 'sarath@doubtbridge.com' },
     student: { name: 'ECE Student', email: 'ece.student@doubtbridge.com' },
     subjects: [
-      { name: 'Digital Electronics', topics: ['Logic Gates', 'Flip-Flops', 'Counters'] },
-      { name: 'Signals and Systems', topics: ['Signal Classification', 'Convolution', 'Fourier Transform'] },
-      { name: 'Analog Electronics', topics: ['Diodes', 'Transistors', 'Amplifiers'] },
-      { name: 'Communication Systems', topics: ['Modulation', 'Noise', 'Bandwidth'] },
-      { name: 'Microprocessors', topics: ['8086 Architecture', 'Instruction Set', 'Interfacing'] },
+      {
+        name: 'Digital Electronics',
+        topics: [
+          'Logic Gates & Boolean Algebra',
+          'Flip-Flops & Latches',
+          'Synchronous & Asynchronous Counters',
+          'Combinational Circuits (Mux, Demux)',
+          'Shift Registers'
+        ]
+      },
+      {
+        name: 'Signals and Systems',
+        topics: [
+          'Signal Classification & Properties',
+          'Continuous & Discrete Convolution',
+          'Fourier Series & Transform',
+          'Laplace & Z-Transform',
+          'Sampling Theorem'
+        ]
+      },
+      {
+        name: 'Analog Electronics',
+        topics: [
+          'Diodes & Rectifier Circuits',
+          'BJT and MOSFET Transistors',
+          'Operational Amplifiers (Op-Amps)',
+          'Feedback Amplifiers & Oscillators',
+          'Power Amplifiers'
+        ]
+      },
+      {
+        name: 'Communication Systems',
+        topics: [
+          'Amplitude & Frequency Modulation (AM/FM)',
+          'Digital Modulation (ASK, FSK, PSK)',
+          'Noise Analysis & SNR',
+          'Information Theory & Channel Capacity',
+          'Antennas & Wave Propagation'
+        ]
+      },
+      {
+        name: 'Microprocessors',
+        topics: [
+          '8086 Microprocessor Architecture',
+          'Assembly Language Instruction Set',
+          'Memory & Peripheral Interfacing',
+          'Interrupt Processing',
+          'ARM Microcontroller Basics'
+        ]
+      },
     ],
   },
   {
@@ -44,11 +150,56 @@ const catalog: DepartmentSeed[] = [
     faculty: { name: 'Dr. Issac Newton', email: 'issac@doubtbridge.com' },
     student: { name: 'AI and DS Student', email: 'aids.student@doubtbridge.com' },
     subjects: [
-      { name: 'Data Science', topics: ['Data Cleaning', 'Exploratory Analysis', 'Visualization'] },
-      { name: 'Artificial Intelligence', topics: ['Search Algorithms', 'Knowledge Representation', 'Planning'] },
-      { name: 'Python for Data Science', topics: ['NumPy', 'Pandas', 'Matplotlib'] },
-      { name: 'Statistics for Data Science', topics: ['Probability', 'Hypothesis Testing', 'Regression'] },
-      { name: 'Data Analytics', topics: ['Dashboards', 'KPIs', 'Business Analysis'] },
+      {
+        name: 'Data Science',
+        topics: [
+          'Data Cleaning & Preprocessing',
+          'Exploratory Data Analysis (EDA)',
+          'Data Visualization & Storytelling',
+          'Feature Engineering & Selection',
+          'Dimensionality Reduction (PCA)'
+        ]
+      },
+      {
+        name: 'Artificial Intelligence',
+        topics: [
+          'Search Algorithms (A*, BFS, DFS)',
+          'Knowledge Representation & Logic',
+          'Constraint Satisfaction Problems',
+          'Adversarial Search & Game Playing',
+          'Expert Systems'
+        ]
+      },
+      {
+        name: 'Python for Data Science',
+        topics: [
+          'NumPy Arrays & Numerical Ops',
+          'Pandas DataFrames & Manipulation',
+          'Matplotlib & Seaborn Visualization',
+          'Scikit-Learn ML Pipelines',
+          'Jupyter Notebook Workflows'
+        ]
+      },
+      {
+        name: 'Statistics for Data Science',
+        topics: [
+          'Probability Distributions',
+          'Hypothesis Testing & p-values',
+          'Linear & Logistic Regression',
+          'ANOVA and Chi-Square Tests',
+          'Bayesian Inference'
+        ]
+      },
+      {
+        name: 'Data Analytics',
+        topics: [
+          'Business Intelligence & KPIs',
+          'Interactive Dashboards',
+          'A/B Testing & Experimentation',
+          'Time Series Analysis & Forecasting',
+          'SQL for Business Analytics'
+        ]
+      },
     ],
   },
   {
@@ -56,11 +207,56 @@ const catalog: DepartmentSeed[] = [
     faculty: { name: 'Dr. Raayan Kumar', email: 'raayan@doubtbridge.com' },
     student: { name: 'AI and ML Student', email: 'aiml.student@doubtbridge.com' },
     subjects: [
-      { name: 'Machine Learning', topics: ['Supervised Learning', 'Classification', 'Clustering'] },
-      { name: 'Deep Learning', topics: ['Backpropagation', 'CNNs', 'RNNs'] },
-      { name: 'Artificial Intelligence', topics: ['Intelligent Agents', 'Search', 'Reasoning'] },
-      { name: 'Neural Networks', topics: ['Perceptrons', 'Activation Functions', 'Optimization'] },
-      { name: 'Natural Language Processing', topics: ['Tokenization', 'Embeddings', 'Transformers'] },
+      {
+        name: 'Machine Learning',
+        topics: [
+          'Supervised Learning Algorithms',
+          'Classification & Decision Trees',
+          'Clustering Algorithms (K-Means)',
+          'Ensemble Methods (Random Forest, XGBoost)',
+          'Hyperparameter Tuning'
+        ]
+      },
+      {
+        name: 'Deep Learning',
+        topics: [
+          'Forward and Backpropagation',
+          'Convolutional Neural Networks (CNNs)',
+          'Recurrent Neural Networks (RNNs & LSTMs)',
+          'Generative Adversarial Networks (GANs)',
+          'Transformers & Attention Mechanisms'
+        ]
+      },
+      {
+        name: 'Artificial Intelligence',
+        topics: [
+          'Intelligent Autonomous Agents',
+          'State-Space Search & Heuristics',
+          'Probabilistic Reasoning',
+          'Reinforcement Learning Basics',
+          'Ethics & Safety in AI'
+        ]
+      },
+      {
+        name: 'Neural Networks',
+        topics: [
+          'Perceptrons & MLPs',
+          'Activation Functions (ReLU, Softmax)',
+          'Optimization Algorithms (SGD, Adam)',
+          'Regularization & Dropout',
+          'Transfer Learning'
+        ]
+      },
+      {
+        name: 'Natural Language Processing',
+        topics: [
+          'Text Preprocessing & Tokenization',
+          'Word Embeddings (Word2Vec)',
+          'Sequence-to-Sequence Models',
+          'Large Language Models (LLMs)',
+          'Sentiment Analysis & NER'
+        ]
+      },
     ],
   },
 ];
@@ -148,9 +344,10 @@ async function main() {
     const dsaSubject = cse.subjectsMap.get('Data Structures and Algorithms')?.subject;
     const treeTopic = cse.subjectsMap.get('Data Structures and Algorithms')?.topicsMap.get('Trees and Graphs');
     const osSubject = cse.subjectsMap.get('Operating Systems')?.subject;
+    const cnSubject = cse.subjectsMap.get('Computer Networks')?.subject;
+    const osiTopic = cse.subjectsMap.get('Computer Networks')?.topicsMap.get('OSI Model and Layer Architecture');
 
     if (dsaSubject) {
-      // 1. ANSWERED doubt
       const doubt1 = await prisma.doubt.create({
         data: {
           title: 'How to perform AVL Tree rotations?',
@@ -178,7 +375,6 @@ async function main() {
         }
       });
 
-      // 2. IN_PROGRESS doubt
       const doubt2 = await prisma.doubt.create({
         data: {
           title: 'Dijkstra Algorithm edge weights constraint',
@@ -201,7 +397,6 @@ async function main() {
     }
 
     if (osSubject) {
-      // 3. RESOLVED doubt
       const doubt3 = await prisma.doubt.create({
         data: {
           title: 'Difference between Process and Thread',
@@ -225,6 +420,35 @@ async function main() {
           doubtId: doubt3.id,
           userId: cse.facultyUser.id,
           content: 'Threads share the same virtual address space, memory, and code section. Switching between threads of the same process avoids flushing TLB caches.'
+        }
+      });
+    }
+
+    if (cnSubject) {
+      const doubtCN = await prisma.doubt.create({
+        data: {
+          title: 'Difference between TCP 3-way handshake and UDP connection',
+          description: 'How does TCP guarantee reliability during the SYN, SYN-ACK, and ACK handshake sequence?',
+          status: 'ANSWERED',
+          studentId: cse.studentProfile.id,
+          departmentId: cse.department.id,
+          subjectId: cnSubject.id,
+          topicId: osiTopic?.id,
+        }
+      });
+      await prisma.doubtAssignment.create({
+        data: {
+          doubtId: doubtCN.id,
+          facultyId: cse.facultyProfile.id,
+          routingScore: 100,
+          routingFactors: JSON.stringify({ departmentMatch: true, subjectMatch: true, topicMatch: true })
+        }
+      });
+      await prisma.doubtResponse.create({
+        data: {
+          doubtId: doubtCN.id,
+          userId: cse.facultyUser.id,
+          content: 'TCP uses sequence numbers and acknowledgment numbers during the 3-way handshake to establish initial sequence numbers (ISN) and ensure both sender and receiver are synchronized.'
         }
       });
     }
@@ -272,7 +496,7 @@ async function main() {
     }
   }
 
-  console.log('Seeded 4 departments, 4 faculty members, 4 students, and realistic doubt workflow samples.');
+  console.log('Seeded 4 departments, 4 faculty members, 4 students, and comprehensive topics across all subjects.');
   console.log(`All demo accounts use password: ${demoPassword}`);
 }
 
