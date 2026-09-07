@@ -10,17 +10,17 @@ DoubtBridge eliminates the chaos of academic Q&A. Students submit doubts; the sy
 
 ### Key Highlights
 
-- ?? **Smart Routing Engine** — Scores faculty on expertise, topic match, availability, and workload to pick the best match
-- ?? **Three Role System** — Students, Faculty, and Admin each get a tailored dashboard
-- ?? **Full Doubt Lifecycle** — `SUBMITTED ? QUEUED ? ASSIGNED ? ACCEPTED ? IN_PROGRESS ? ANSWERED ? RESOLVED ? CLOSED`
-- ?? **JWT Authentication** — Secure, stateless auth with role-based access control
-- ?? **Swagger API Docs** — Interactive documentation served at `/api-docs`
-- ?? **Docker Ready** — One-command Postgres setup for local dev
-- ?? **Render Deploy** — Production-ready `render.yaml` included
+-  **Smart Routing Engine** — Scores faculty on expertise, topic match, availability, and workload to pick the best match
+-  **Three Role System** — Students, Faculty, and Admin each get a tailored dashboard
+-  **Full Doubt Lifecycle** — `SUBMITTED ? QUEUED ? ASSIGNED ? ACCEPTED ? IN_PROGRESS ? ANSWERED ? RESOLVED ? CLOSED`
+-  **JWT Authentication** — Secure, stateless auth with role-based access control
+-  **Swagger API Docs** — Interactive documentation served at `/api-docs`
+-  **Docker Ready** — One-command Postgres setup for local dev
+-  **Render Deploy** — Production-ready `render.yaml` included
 
 ---
 
-## ??? Architecture
+##  Architecture
 
 ```
 doubtbridge/
@@ -50,7 +50,7 @@ doubtbridge/
 
 ---
 
-## ?? Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -135,7 +135,7 @@ Open http://localhost:5173 ??
 
 ---
 
-## ?? API Reference
+##  API Reference
 
 The full interactive API is available at **`http://localhost:5000/api-docs`** (Swagger UI).
 
@@ -186,7 +186,7 @@ The full interactive API is available at **`http://localhost:5000/api-docs`** (S
 
 ---
 
-## ?? Smart Routing Engine
+##  Smart Routing Engine
 
 When a student submits a doubt, `RoutingService.routeDoubt()` runs automatically. It scores every eligible faculty member in the department:
 
@@ -210,7 +210,7 @@ If no faculty is eligible, the doubt is set to `QUEUED`. Queued doubts are autom
 
 ---
 
-## ??? Data Model
+##  Data Model
 
 ```
 User ---- StudentProfile ---- Doubts
@@ -230,7 +230,7 @@ Department ---- Subject ---- Topic
 
 ---
 
-## ?? Testing
+##  Testing
 
 The project uses **Jest** with **Supertest** for API integration and E2E testing.
 
@@ -254,7 +254,7 @@ Test suites include:
 
 ---
 
-## ?? Deployment (Render)
+##  Deployment (Render)
 
 The `render.yaml` is pre-configured for zero-config deployment on [Render](https://render.com).
 
@@ -279,7 +279,7 @@ The `render.yaml` is pre-configured for zero-config deployment on [Render](https
 
 ---
 
-## ??? Tech Stack
+##  Tech Stack
 
 ### Backend
 
@@ -310,7 +310,7 @@ The `render.yaml` is pre-configured for zero-config deployment on [Render](https
 
 ---
 
-## ?? Available Scripts
+##  Available Scripts
 
 ### Root (Backend)
 
@@ -339,7 +339,7 @@ The `render.yaml` is pre-configured for zero-config deployment on [Render](https
 
 ---
 
-## ?? Health Check
+##  Health Check
 
 ```bash
 curl http://localhost:5000/health
@@ -347,7 +347,3 @@ curl http://localhost:5000/health
 ```
 
 ---
-
-## ?? License
-
-ISC
