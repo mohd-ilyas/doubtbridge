@@ -1,0 +1,180 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  FACULTY
+  ADMIN
+}
+
+enum DoubtStatus {
+  DRAFT
+  SUBMITTED
+  QUEUED
+  ASSIGNED
+  ACCEPTED
+  IN_PROGRESS
+  ANSWERED
+  RESOLVED
+  REOPENED
+  CLOSED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(STUDENT)
+  createdAt DateTime @default(now())
+
+  studentProfile StudentProfile?
+  facultyProfile FacultyProfile?
+}
+
+model StudentProfile {
+  id           String     @id @default(uuid())
+  userId       String     @unique
+  user         User       @relation(fields: [userId], references: [id])
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id])
+  
+  doubts       Doubt[]
+}
+
+model Department {
+  id       String    @id @default(uuid())
+  name     String    @unique
+  code     String?   @unique
+  subjects Subject[]
+  faculty  FacultyProfile[]
+  students StudentProfile[]
+  doubts   Doubt[]
+}
+
+model Subject {
+  id           String    @id @default(uuid())
+  name         String
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id])
+  topics       Topic[]
+  doubts       Doubt[]
+  expertises   FacultyExpertise[]
+}
+
+model Topic {
+  id        String  @id @default(uuid())
+  name      String
+  subjectId String
+  subject   Subject @relation(fields: [subjectId], references: [id])
+  expertises FacultyTopicExpertise[]
+  doubts    Doubt[]
+}
+
+model FacultyProfile {
+  id             String @id @default(uuid())
+  userId         String @unique
+  user           User   @relation(fields: [userId], references: [id])
+  departmentId   String
+  department     Department @relation(fields: [departmentId], references: [id])
+  
+  availableFrom  DateTime?
+  availableUntil DateTime?
+  maxWorkload    Int    @default(5)
+  
+  expertises        FacultyExpertise[]
+  topicExpertises   FacultyTopicExpertise[]
+  availabilitySlots AvailabilitySlot[]
+  assignedDoubts    DoubtAssignment[]
+}
+
+model FacultyExpertise {
+  id               String         @id @default(uuid())
+  facultyProfileId String
+  facultyProfile   FacultyProfile @relation(fields: [facultyProfileId], references: [id])
+  subjectId        String
+  subject          Subject        @relation(fields: [subjectId], references: [id])
+
+  @@unique([facultyProfileId, subjectId])
+}
+
+model FacultyTopicExpertise {
+  id               String         @id @default(uuid())
+  facultyProfileId String
+  facultyProfile   FacultyProfile @relation(fields: [facultyProfileId], references: [id])
+  topicId          String
+  topic            Topic          @relation(fields: [topicId], references: [id])
+
+  @@unique([facultyProfileId, topicId])
+}
+
+model AvailabilitySlot {
+  id               String         @id @default(uuid())
+  facultyProfileId String
+  facultyProfile   FacultyProfile @relation(fields: [facultyProfileId], references: [id])
+  startTime        DateTime
+  endTime          DateTime
+}
+
+model Doubt {
+  id           String   @id @default(uuid())
+  title        String
+  description  String
+  status       DoubtStatus @default(SUBMITTED)
+  studentId    String
+  departmentId String
+  subjectId    String
+  topicId      String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  student      StudentProfile @relation(fields: [studentId], references: [id])
+  department   Department     @relation(fields: [departmentId], references: [id])
+  subject      Subject        @relation(fields: [subjectId], references: [id])
+  topic        Topic?         @relation(fields: [topicId], references: [id])
+  
+  assignments  DoubtAssignment[]
+  responses    DoubtResponse[]
+  activity     ActivityLog[]
+}
+
+model DoubtAssignment {
+  id             String   @id @default(uuid())
+  doubtId        String
+  facultyId      String
+  routingScore   Float
+  routingFactors Json?
+  assignedAt     DateTime @default(now())
+  
+  doubt          Doubt          @relation(fields: [doubtId], references: [id])
+  faculty        FacultyProfile @relation(fields: [facultyId], references: [id])
+}
+
+model DoubtResponse {
+  id        String   @id @default(uuid())
+  doubtId   String
+  userId    String
+  content   String
+  createdAt DateTime @default(now())
+
+  doubt     Doubt    @relation(fields: [doubtId], references: [id])
+  // We link to User rather than Faculty/Student to allow both to respond
+}
+
+model ActivityLog {
+  id        String   @id @default(uuid())
+  doubtId   String
+  action    String
+  userId    String?
+  details   Json?
+  createdAt DateTime @default(now())
+
+  doubt     Doubt    @relation(fields: [doubtId], references: [id])
+}

@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+frontend/.env.*
+!frontend/.env.example
+
+# Local databases and generated Prisma clients
+backend/prisma/*.db
+backend/generated/
+
+# Build output
+backend/dist/
+frontend/dist/
+
+# Logs and local tooling
+*.log
+.DS_Store
+.idea/
+.vscode/
