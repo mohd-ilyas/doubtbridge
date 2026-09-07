@@ -16,8 +16,8 @@ describe('Academic API contract', () => {
 
   beforeAll(async () => {
     await cleanupDatabase();
-    const first = await prisma.department.create({ data: { name: 'Engineering One' } });
-    const second = await prisma.department.create({ data: { name: 'Engineering Two' } });
+    const first = await prisma.department.create({ data: { name: 'Test Department Alpha' } });
+    const second = await prisma.department.create({ data: { name: 'Test Department Beta' } });
     departmentOne = first.id;
     departmentTwo = second.id;
     const firstSubject = await prisma.subject.create({ data: { name: 'Subject One', departmentId: departmentOne } });

@@ -146,6 +146,63 @@ const catalog: DepartmentSeed[] = [
     ],
   },
   {
+    name: 'Mechanical Engineering', code: 'MECH',
+    faculty: { name: 'Dr. Vikram Ramesh', email: 'vikram@doubtbridge.com' },
+    student: { name: 'MECH Student', email: 'mech.student@doubtbridge.com' },
+    subjects: [
+      {
+        name: 'Thermodynamics',
+        topics: [
+          'First and Second Laws of Thermodynamics',
+          'Entropy and Availability Analysis',
+          'Gas Power Cycles (Otto, Diesel, Dual)',
+          'Vapor Power Cycles (Rankine Cycle)',
+          'Refrigeration and Psychrometrics'
+        ]
+      },
+      {
+        name: 'Fluid Mechanics',
+        topics: [
+          'Fluid Statics and Pressure Measurement',
+          'Bernoulli Equation & Fluid Kinematics',
+          'Viscous Flow in Pipes and Friction Factor',
+          'Dimensional Analysis and Similitude',
+          'Hydraulic Turbines and Pumps'
+        ]
+      },
+      {
+        name: 'Strength of Materials',
+        topics: [
+          'Stress, Strain, and Elastic Constants',
+          'Bending Moment and Shear Force Diagrams',
+          'Torsion of Circular Shafts',
+          'Deflection of Beams',
+          'Columns and Thin Cylinders'
+        ]
+      },
+      {
+        name: 'Manufacturing Technology',
+        topics: [
+          'Metal Casting and Pattern Design',
+          'Welding Processes and Defect Analysis',
+          'Metal Cutting Dynamics and Lathe Machine',
+          'CNC Machining and Programming',
+          'Unconventional Machining (EDM, ECM)'
+        ]
+      },
+      {
+        name: 'Engineering Mechanics',
+        topics: [
+          'Statics of Particles and Free Body Diagrams',
+          'Equilibrium of Rigid Bodies and Trusses',
+          'Friction and Wedge Mechanics',
+          'Kinematics and Kinetics of Particles',
+          'Centroid and Moment of Inertia'
+        ]
+      },
+    ],
+  },
+  {
     name: 'Artificial Intelligence and Data Science', code: 'AI_DS',
     faculty: { name: 'Dr. Issac Newton', email: 'issac@doubtbridge.com' },
     student: { name: 'AI and DS Student', email: 'aids.student@doubtbridge.com' },
@@ -479,6 +536,23 @@ async function main() {
     }
   }
 
+  const mech = seededData['MECH'];
+  if (mech) {
+    const thermoSubject = mech.subjectsMap.get('Thermodynamics')?.subject;
+    if (thermoSubject) {
+      await prisma.doubt.create({
+        data: {
+          title: 'Second Law of Thermodynamics vs Carnot Efficiency',
+          description: 'Why can no real heat engine achieve 100% thermal efficiency even under ideal reversible conditions?',
+          status: 'SUBMITTED',
+          studentId: mech.studentProfile.id,
+          departmentId: mech.department.id,
+          subjectId: thermoSubject.id,
+        }
+      });
+    }
+  }
+
   const aids = seededData['AI_DS'];
   if (aids) {
     const dsSubject = aids.subjectsMap.get('Data Science')?.subject;
@@ -496,7 +570,7 @@ async function main() {
     }
   }
 
-  console.log('Seeded 4 departments, 4 faculty members, 4 students, and comprehensive topics across all subjects.');
+  console.log('Seeded 5 departments (CSE, ECE, MECH, AI_DS, AI_ML), faculty members, students, and sample doubts.');
   console.log(`All demo accounts use password: ${demoPassword}`);
 }
 
