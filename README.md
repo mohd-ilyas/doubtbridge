@@ -1,22 +1,22 @@
-# DoubtBridge ??
+# DoubtBridge !
 
-> **A smart academic doubt-management platform** that intelligently routes student questions to the right faculty — based on subject expertise, availability, and workload.
+> **A smart academic doubt-management platform** that intelligently routes student questions to the right faculty â€” based on subject expertise, availability, and workload.
 
 ---
 
-## ? What is DoubtBridge?
+##  What is DoubtBridge?
 
-DoubtBridge eliminates the chaos of academic Q&A. Students submit doubts; the system automatically assigns them to the most qualified available faculty using a **scoring-based routing engine**. Faculty members can accept, work on, respond to, and transfer doubts — all through a clean, role-based interface.
+DoubtBridge eliminates the chaos of academic Q&A. Students submit doubts; the system automatically assigns them to the most qualified available faculty using a **scoring-based routing engine**. Faculty members can accept, work on, respond to, and transfer doubts â€” all through a clean, role-based interface.
 
 ### Key Highlights
 
-- ?? **Smart Routing Engine** — Scores faculty on expertise, topic match, availability, and workload to pick the best match
-- ?? **Three Role System** — Students, Faculty, and Admin each get a tailored dashboard
-- ?? **Full Doubt Lifecycle** — `SUBMITTED ? QUEUED ? ASSIGNED ? ACCEPTED ? IN_PROGRESS ? ANSWERED ? RESOLVED ? CLOSED`
-- ?? **JWT Authentication** — Secure, stateless auth with role-based access control
-- ?? **Swagger API Docs** — Interactive documentation served at `/api-docs`
-- ?? **Docker Ready** — One-command Postgres setup for local dev
-- ?? **Render Deploy** — Production-ready `render.yaml` included
+- ?? **Smart Routing Engine** â€” Scores faculty on expertise, topic match, availability, and workload to pick the best match
+- ?? **Three Role System** â€” Students, Faculty, and Admin each get a tailored dashboard
+- ?? **Full Doubt Lifecycle** â€” `SUBMITTED ? QUEUED ? ASSIGNED ? ACCEPTED ? IN_PROGRESS ? ANSWERED ? RESOLVED ? CLOSED`
+- ?? **JWT Authentication** â€” Secure, stateless auth with role-based access control
+- ?? **Swagger API Docs** â€” Interactive documentation served at `/api-docs`
+- ?? **Docker Ready** â€” One-command Postgres setup for local dev
+- ?? **Render Deploy** â€” Production-ready `render.yaml` included
 
 ---
 
@@ -25,26 +25,26 @@ DoubtBridge eliminates the chaos of academic Q&A. Students submit doubts; the sy
 ```
 doubtbridge/
 +-- backend/                  # Node.js / Express / TypeScript API
-¦   +-- prisma/
-¦   ¦   +-- schema.prisma              # SQLite schema (local dev)
-¦   ¦   +-- schema.postgresql.prisma  # PostgreSQL schema (production)
-¦   +-- src/
-¦       +-- config/           # Environment variable validation
-¦       +-- controllers/      # Request handlers
-¦       +-- middlewares/      # Auth, error handling, validation
-¦       +-- routes/           # Express routers
-¦       +-- services/         # Business logic (routing, auth, doubts)
-¦       +-- validators/       # Zod schemas
-¦       +-- __tests__/        # Integration & E2E tests
-¦
+Â¦   +-- prisma/
+Â¦   Â¦   +-- schema.prisma              # SQLite schema (local dev)
+Â¦   Â¦   +-- schema.postgresql.prisma  # PostgreSQL schema (production)
+Â¦   +-- src/
+Â¦       +-- config/           # Environment variable validation
+Â¦       +-- controllers/      # Request handlers
+Â¦       +-- middlewares/      # Auth, error handling, validation
+Â¦       +-- routes/           # Express routers
+Â¦       +-- services/         # Business logic (routing, auth, doubts)
+Â¦       +-- validators/       # Zod schemas
+Â¦       +-- __tests__/        # Integration & E2E tests
+Â¦
 +-- frontend/                 # React 19 / Vite / TailwindCSS SPA
     +-- src/
         +-- components/       # Reusable UI components
         +-- contexts/         # Auth context (global state)
         +-- pages/
-        ¦   +-- student/      # Student dashboard & doubt forms
-        ¦   +-- faculty/      # Faculty dashboard & settings
-        ¦   +-- admin/        # Admin dashboard & faculty management
+        Â¦   +-- student/      # Student dashboard & doubt forms
+        Â¦   +-- faculty/      # Faculty dashboard & settings
+        Â¦   +-- admin/        # Admin dashboard & faculty management
         +-- lib/              # API client (axios)
 ```
 
@@ -104,14 +104,14 @@ cd frontend && npm install && cd ..
 
 ### 4. Set up the database
 
-**Option A — SQLite (simplest, no Docker needed):**
+**Option A â€” SQLite (simplest, no Docker needed):**
 ```bash
 npm run db:generate    # Generate Prisma client
 npm run db:push        # Push schema to SQLite
 npm run db:seed        # Seed with demo data
 ```
 
-**Option B — PostgreSQL via Docker:**
+**Option B â€” PostgreSQL via Docker:**
 ```bash
 docker-compose up -d   # Start Postgres container
 
@@ -124,10 +124,10 @@ npm run db:seed:postgres
 ### 5. Start the development servers
 
 ```bash
-# Terminal 1 — Backend (runs on :5000)
+# Terminal 1 â€” Backend (runs on :5000)
 npm run dev
 
-# Terminal 2 — Frontend (runs on :5173)
+# Terminal 2 â€” Frontend (runs on :5173)
 cd frontend && npm run dev
 ```
 
@@ -139,7 +139,7 @@ Open http://localhost:5173 ??
 
 The full interactive API is available at **`http://localhost:5000/api-docs`** (Swagger UI).
 
-### Auth Routes — `/auth`
+### Auth Routes â€” `/auth`
 
 | Method | Endpoint | Description | Auth |
 |--------|----------|-------------|------|
@@ -147,7 +147,7 @@ The full interactive API is available at **`http://localhost:5000/api-docs`** (S
 | `POST` | `/auth/login` | Login and receive JWT | Public |
 | `GET` | `/auth/me` | Get current user info | ?? Any |
 
-### Academic Routes — `/api`
+### Academic Routes â€” `/api`
 
 | Method | Endpoint | Description | Auth |
 |--------|----------|-------------|------|
@@ -155,7 +155,7 @@ The full interactive API is available at **`http://localhost:5000/api-docs`** (S
 | `GET` | `/api/departments/:id/subjects` | List subjects in a department | ?? Any |
 | `GET` | `/api/subjects/:id/topics` | List topics in a subject | ?? Any |
 
-### Doubt Routes — `/doubts`
+### Doubt Routes â€” `/doubts`
 
 | Method | Endpoint | Description | Auth |
 |--------|----------|-------------|------|
@@ -165,7 +165,7 @@ The full interactive API is available at **`http://localhost:5000/api-docs`** (S
 | `POST` | `/doubts/:id/reopen` | Reopen a resolved doubt | ?? Student |
 | `POST` | `/doubts/:id/close` | Permanently close a doubt | ?? Student / ??? Admin |
 
-### Faculty Routes — `/faculty`
+### Faculty Routes â€” `/faculty`
 
 | Method | Endpoint | Description | Auth |
 |--------|----------|-------------|------|
@@ -177,7 +177,7 @@ The full interactive API is available at **`http://localhost:5000/api-docs`** (S
 | `POST` | `/faculty/doubts/:id/respond` | Post a response | ????? Faculty |
 | `POST` | `/faculty/doubts/:id/transfer` | Transfer doubt back to queue | ????? Faculty |
 
-### Admin Routes — `/admin`
+### Admin Routes â€” `/admin`
 
 | Method | Endpoint | Description | Auth |
 |--------|----------|-------------|------|
@@ -197,7 +197,7 @@ Score = subjectScore + topicScore + availabilityScore + workloadScore
 | Factor | Without Topic | With Topic |
 |--------|--------------|------------|
 | Subject Expertise (required) | 50 pts | 40 pts |
-| Topic Expertise (bonus) | — | 25 pts |
+| Topic Expertise (bonus) | â€” | 25 pts |
 | Availability | 25 pts | 20 pts |
 | Free Workload Ratio | up to 25 pts | up to 15 pts |
 
@@ -259,8 +259,8 @@ Test suites include:
 The `render.yaml` is pre-configured for zero-config deployment on [Render](https://render.com).
 
 **Services deployed:**
-- `doubtbridge-api` — Node.js web service (backend)
-- `doubtbridge-web` — Static site (frontend)
+- `doubtbridge-api` â€” Node.js web service (backend)
+- `doubtbridge-web` â€” Static site (frontend)
 
 **Steps:**
 1. Push your code to GitHub
@@ -275,7 +275,7 @@ The `render.yaml` is pre-configured for zero-config deployment on [Render](https
 | `DEMO_PASSWORD` | Backend | Password for seeded demo users |
 | `VITE_API_URL` | Frontend | Your Render backend URL |
 
-4. Deploy — Render will run migrations and seed automatically via `npm run start:production`
+4. Deploy â€” Render will run migrations and seed automatically via `npm run start:production`
 
 ---
 
