@@ -3,7 +3,7 @@ services:
     name: doubtbridge-api
     runtime: node
     rootDir: .
-    buildCommand: npm ci && npm run build:backend && npm run db:generate:postgres
+    buildCommand: npm ci --include=dev && npm run build:backend && npm run db:generate:postgres
     startCommand: npm run start:production
     healthCheckPath: /health
     envVars:
