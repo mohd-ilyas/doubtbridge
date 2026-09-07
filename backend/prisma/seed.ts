@@ -47,7 +47,7 @@ const catalog: DepartmentSeed[] = [
       { name: 'Data Science', topics: ['Data Cleaning', 'Exploratory Analysis', 'Visualization'] },
       { name: 'Artificial Intelligence', topics: ['Search Algorithms', 'Knowledge Representation', 'Planning'] },
       { name: 'Python for Data Science', topics: ['NumPy', 'Pandas', 'Matplotlib'] },
-      { name: 'Statistics', topics: ['Probability', 'Hypothesis Testing', 'Regression'] },
+      { name: 'Statistics for Data Science', topics: ['Probability', 'Hypothesis Testing', 'Regression'] },
       { name: 'Data Analytics', topics: ['Dashboards', 'KPIs', 'Business Analysis'] },
     ],
   },
@@ -86,6 +86,8 @@ async function main() {
   const now = new Date();
   const yearFromNow = new Date(now.getTime() + 365 * 24 * 60 * 60 * 1000);
 
+  const seededData: Record<string, { department: any; facultyUser: any; facultyProfile: any; studentUser: any; studentProfile: any; subjectsMap: Map<string, any> }> = {};
+
   for (const entry of catalog) {
     const existingDepartment = await prisma.department.findFirst({
       where: { OR: [{ code: entry.code }, { name: entry.name }] },
@@ -93,48 +95,184 @@ async function main() {
     const department = existingDepartment
       ? await prisma.department.update({ where: { id: existingDepartment.id }, data: { name: entry.name, code: entry.code } })
       : await prisma.department.create({ data: { name: entry.name, code: entry.code } });
+
+    const subjectsMap = new Map();
     const subjects = [];
     for (const item of entry.subjects) {
       const subject = await ensureSubject(department.id, item.name);
       const topics = await Promise.all(item.topics.map((topic) => ensureTopic(subject.id, topic)));
       subjects.push({ subject, topics });
+      subjectsMap.set(item.name, { subject, topicsMap: new Map(topics.map(t => [t.name, t])) });
     }
 
-    const faculty = await prisma.user.upsert({
+    const facultyUser = await prisma.user.upsert({
       where: { email: entry.faculty.email },
       update: { name: entry.faculty.name, role: 'FACULTY', password },
       create: { email: entry.faculty.email, password, name: entry.faculty.name, role: 'FACULTY' },
     });
-    const profile = await prisma.facultyProfile.upsert({
-      where: { userId: faculty.id },
+    const facultyProfile = await prisma.facultyProfile.upsert({
+      where: { userId: facultyUser.id },
       update: { departmentId: department.id, maxWorkload: 10, availableFrom: now, availableUntil: yearFromNow },
-      create: { userId: faculty.id, departmentId: department.id, maxWorkload: 10, availableFrom: now, availableUntil: yearFromNow },
+      create: { userId: facultyUser.id, departmentId: department.id, maxWorkload: 10, availableFrom: now, availableUntil: yearFromNow },
     });
+
     for (const { subject, topics } of subjects) {
       await prisma.facultyExpertise.upsert({
-        where: { facultyProfileId_subjectId: { facultyProfileId: profile.id, subjectId: subject.id } },
-        update: {}, create: { facultyProfileId: profile.id, subjectId: subject.id },
+        where: { facultyProfileId_subjectId: { facultyProfileId: facultyProfile.id, subjectId: subject.id } },
+        update: {}, create: { facultyProfileId: facultyProfile.id, subjectId: subject.id },
       });
       for (const topic of topics) {
         await prisma.facultyTopicExpertise.upsert({
-          where: { facultyProfileId_topicId: { facultyProfileId: profile.id, topicId: topic.id } },
-          update: {}, create: { facultyProfileId: profile.id, topicId: topic.id },
+          where: { facultyProfileId_topicId: { facultyProfileId: facultyProfile.id, topicId: topic.id } },
+          update: {}, create: { facultyProfileId: facultyProfile.id, topicId: topic.id },
         });
       }
     }
 
-    const student = await prisma.user.upsert({
+    const studentUser = await prisma.user.upsert({
       where: { email: entry.student.email },
       update: { name: entry.student.name, role: 'STUDENT', password },
       create: { email: entry.student.email, password, name: entry.student.name, role: 'STUDENT' },
     });
-    await prisma.studentProfile.upsert({
-      where: { userId: student.id }, update: { departmentId: department.id },
-      create: { userId: student.id, departmentId: department.id },
+    const studentProfile = await prisma.studentProfile.upsert({
+      where: { userId: studentUser.id }, update: { departmentId: department.id },
+      create: { userId: studentUser.id, departmentId: department.id },
     });
+
+    seededData[entry.code] = { department, facultyUser, facultyProfile, studentUser, studentProfile, subjectsMap };
   }
 
-  console.log('Seeded 4 departments, 4 faculty members, 4 students, and academic routing data.');
+  // Seed sample doubts across departments
+  const cse = seededData['CSE'];
+  if (cse) {
+    const dsaSubject = cse.subjectsMap.get('Data Structures and Algorithms')?.subject;
+    const treeTopic = cse.subjectsMap.get('Data Structures and Algorithms')?.topicsMap.get('Trees and Graphs');
+    const osSubject = cse.subjectsMap.get('Operating Systems')?.subject;
+
+    if (dsaSubject) {
+      // 1. ANSWERED doubt
+      const doubt1 = await prisma.doubt.create({
+        data: {
+          title: 'How to perform AVL Tree rotations?',
+          description: 'I am getting confused between Left-Right (LR) and Right-Left (RL) rotations when rebalancing an AVL tree.',
+          status: 'ANSWERED',
+          studentId: cse.studentProfile.id,
+          departmentId: cse.department.id,
+          subjectId: dsaSubject.id,
+          topicId: treeTopic?.id,
+        }
+      });
+      await prisma.doubtAssignment.create({
+        data: {
+          doubtId: doubt1.id,
+          facultyId: cse.facultyProfile.id,
+          routingScore: 100,
+          routingFactors: JSON.stringify({ departmentMatch: true, subjectMatch: true, topicMatch: true })
+        }
+      });
+      await prisma.doubtResponse.create({
+        data: {
+          doubtId: doubt1.id,
+          userId: cse.facultyUser.id,
+          content: 'For an LR imbalance (inserted in left child right subtree), first do a left rotation on the left child, then a right rotation on the root.'
+        }
+      });
+
+      // 2. IN_PROGRESS doubt
+      const doubt2 = await prisma.doubt.create({
+        data: {
+          title: 'Dijkstra Algorithm edge weights constraint',
+          description: 'Why does Dijkstra algorithm fail when negative edge weights are present in a graph?',
+          status: 'IN_PROGRESS',
+          studentId: cse.studentProfile.id,
+          departmentId: cse.department.id,
+          subjectId: dsaSubject.id,
+          topicId: treeTopic?.id,
+        }
+      });
+      await prisma.doubtAssignment.create({
+        data: {
+          doubtId: doubt2.id,
+          facultyId: cse.facultyProfile.id,
+          routingScore: 95,
+          routingFactors: JSON.stringify({ departmentMatch: true, subjectMatch: true })
+        }
+      });
+    }
+
+    if (osSubject) {
+      // 3. RESOLVED doubt
+      const doubt3 = await prisma.doubt.create({
+        data: {
+          title: 'Difference between Process and Thread',
+          description: 'Can someone explain context switching overhead difference between process and thread?',
+          status: 'RESOLVED',
+          studentId: cse.studentProfile.id,
+          departmentId: cse.department.id,
+          subjectId: osSubject.id,
+        }
+      });
+      await prisma.doubtAssignment.create({
+        data: {
+          doubtId: doubt3.id,
+          facultyId: cse.facultyProfile.id,
+          routingScore: 90,
+          routingFactors: JSON.stringify({ departmentMatch: true, subjectMatch: true })
+        }
+      });
+      await prisma.doubtResponse.create({
+        data: {
+          doubtId: doubt3.id,
+          userId: cse.facultyUser.id,
+          content: 'Threads share the same virtual address space, memory, and code section. Switching between threads of the same process avoids flushing TLB caches.'
+        }
+      });
+    }
+  }
+
+  const ece = seededData['ECE'];
+  if (ece) {
+    const digitalSubject = ece.subjectsMap.get('Digital Electronics')?.subject;
+    if (digitalSubject) {
+      const doubt4 = await prisma.doubt.create({
+        data: {
+          title: 'Synchronous Counter propagation delay',
+          description: 'How does synchronous counter eliminate the propagation delay accumulated in ripple counters?',
+          status: 'ASSIGNED',
+          studentId: ece.studentProfile.id,
+          departmentId: ece.department.id,
+          subjectId: digitalSubject.id,
+        }
+      });
+      await prisma.doubtAssignment.create({
+        data: {
+          doubtId: doubt4.id,
+          facultyId: ece.facultyProfile.id,
+          routingScore: 100,
+          routingFactors: JSON.stringify({ departmentMatch: true, subjectMatch: true })
+        }
+      });
+    }
+  }
+
+  const aids = seededData['AI_DS'];
+  if (aids) {
+    const dsSubject = aids.subjectsMap.get('Data Science')?.subject;
+    if (dsSubject) {
+      await prisma.doubt.create({
+        data: {
+          title: 'Handling missing values in large datasets',
+          description: 'Should we use mean/median imputation or KNN imputation when dealing with non-random missing values?',
+          status: 'SUBMITTED',
+          studentId: aids.studentProfile.id,
+          departmentId: aids.department.id,
+          subjectId: dsSubject.id,
+        }
+      });
+    }
+  }
+
+  console.log('Seeded 4 departments, 4 faculty members, 4 students, and realistic doubt workflow samples.');
   console.log(`All demo accounts use password: ${demoPassword}`);
 }
 

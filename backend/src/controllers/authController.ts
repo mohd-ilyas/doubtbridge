@@ -33,7 +33,15 @@ export const me = async (req: any, res: Response, next: NextFunction) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.user.id },
-      select: { id: true, name: true, email: true, role: true, createdAt: true }
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        createdAt: true,
+        studentProfile: { select: { id: true, departmentId: true } },
+        facultyProfile: { select: { id: true, departmentId: true, maxWorkload: true } }
+      }
     });
     if (!user) throw new AppError('User not found', 404);
 

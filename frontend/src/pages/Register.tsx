@@ -9,6 +9,7 @@ import { GraduationCap } from 'lucide-react';
 
 export const Register = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -44,10 +45,12 @@ export const Register = () => {
       if (response.success) {
         // Automatically login after successful registration
         const loginRes: any = await api.post('/auth/login', { email, password });
-        // Assume context will handle it if we use `login` function from useAuth, but here we don't have it directly. Wait, we DO have it.
-        // Let's import useAuth.
-        // Wait, the API returns a success message, then we login.
-        navigate('/login', { replace: true });
+        if (loginRes.success && loginRes.data) {
+          login(loginRes.data.token, loginRes.data.user);
+          navigate('/student/dashboard', { replace: true });
+        } else {
+          navigate('/login', { replace: true });
+        }
       }
     } catch (err: any) {
       if (err.errors && err.errors.length > 0) {
