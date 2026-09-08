@@ -131,7 +131,7 @@ npm run dev
 cd frontend && npm run dev
 ```
 
-Open http://localhost:5173 ??
+Open http://localhost:5173
 
 ---
 
@@ -145,44 +145,44 @@ The full interactive API is available at **`http://localhost:5000/api-docs`** (S
 |--------|----------|-------------|------|
 | `POST` | `/auth/register` | Register a new student | Public |
 | `POST` | `/auth/login` | Login and receive JWT | Public |
-| `GET` | `/auth/me` | Get current user info | ?? Any |
+| `GET` | `/auth/me` | Get current user info |  Any |
 
 ### Academic Routes — `/api`
 
 | Method | Endpoint | Description | Auth |
 |--------|----------|-------------|------|
-| `GET` | `/api/departments` | List all departments | ?? Any |
-| `GET` | `/api/departments/:id/subjects` | List subjects in a department | ?? Any |
-| `GET` | `/api/subjects/:id/topics` | List topics in a subject | ?? Any |
+| `GET` | `/api/departments` | List all departments |  Any |
+| `GET` | `/api/departments/:id/subjects` | List subjects in a department |  Any |
+| `GET` | `/api/subjects/:id/topics` | List topics in a subject | Any |
 
 ### Doubt Routes — `/doubts`
 
 | Method | Endpoint | Description | Auth |
 |--------|----------|-------------|------|
-| `POST` | `/doubts` | Submit a new doubt | ?? Student |
-| `GET` | `/doubts/student` | Get your submitted doubts | ?? Student |
-| `POST` | `/doubts/:id/resolve` | Mark a doubt as resolved | ?? Student |
-| `POST` | `/doubts/:id/reopen` | Reopen a resolved doubt | ?? Student |
-| `POST` | `/doubts/:id/close` | Permanently close a doubt | ?? Student / ??? Admin |
+| `POST` | `/doubts` | Submit a new doubt |  Student |
+| `GET` | `/doubts/student` | Get your submitted doubts |  Student |
+| `POST` | `/doubts/:id/resolve` | Mark a doubt as resolved |  Student |
+| `POST` | `/doubts/:id/reopen` | Reopen a resolved doubt |  Student |
+| `POST` | `/doubts/:id/close` | Permanently close a doubt |  Student / Admin |
 
 ### Faculty Routes — `/faculty`
 
 | Method | Endpoint | Description | Auth |
 |--------|----------|-------------|------|
-| `PATCH` | `/faculty/availability` | Set availability window | ????? Faculty |
-| `POST` | `/faculty/expertise` | Add a subject/topic expertise | ????? Faculty |
-| `GET` | `/faculty/doubts` | Get assigned doubts | ????? Faculty |
-| `POST` | `/faculty/doubts/:id/accept` | Accept an assigned doubt | ????? Faculty |
-| `POST` | `/faculty/doubts/:id/start` | Start working on a doubt | ????? Faculty |
-| `POST` | `/faculty/doubts/:id/respond` | Post a response | ????? Faculty |
-| `POST` | `/faculty/doubts/:id/transfer` | Transfer doubt back to queue | ????? Faculty |
+| `PATCH` | `/faculty/availability` | Set availability window |  Faculty |
+| `POST` | `/faculty/expertise` | Add a subject/topic expertise | Faculty |
+| `GET` | `/faculty/doubts` | Get assigned doubts | Faculty |
+| `POST` | `/faculty/doubts/:id/accept` | Accept an assigned doubt | Faculty |
+| `POST` | `/faculty/doubts/:id/start` | Start working on a doubt | Faculty |
+| `POST` | `/faculty/doubts/:id/respond` | Post a response | Faculty |
+| `POST` | `/faculty/doubts/:id/transfer` | Transfer doubt back to queue | Faculty |
 
 ### Admin Routes — `/admin`
 
 | Method | Endpoint | Description | Auth |
 |--------|----------|-------------|------|
-| `POST` | `/admin/faculty` | Create a new faculty account | ??? Admin |
-| `GET` | `/admin/dashboard` | Get platform statistics | ??? Admin |
+| `POST` | `/admin/faculty` | Create a new faculty account | Admin |
+| `GET` | `/admin/dashboard` | Get platform statistics | Admin |
 
 ---
 
@@ -343,7 +343,7 @@ The `render.yaml` is pre-configured for zero-config deployment on [Render](https
 
 ```bash
 curl http://localhost:5000/health
-# ? { "success": true, "message": "Server is healthy" }
+#  { "success": true, "message": "Server is healthy" }
 ```
 
 ---
